@@ -1,13 +1,13 @@
 import {Routes , Route} from 'react-router'
 import './App.css'
-import Home from './pages/Home'
+import  Home  from "@/pages/Home.jsx"
 
-function App() {
+const App = () => {
   return (
     <>
       <div>
         <Routes>
-          <Route path='/' element={<home.jsx />} />
+          <Route path='/' element={<Home />} />
         </Routes>
       </div>
     </>

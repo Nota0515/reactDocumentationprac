@@ -2,20 +2,29 @@ import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from '@/context/Oauth'
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const GoogleLoginBtn = () => {
 
     const { setUser } = useAuth();
+    const navigate = useNavigate();
     const login = useGoogleLogin({
-        onSuccess : async tokenRespons => {
+        scope : "openid email profile",
+        onSuccess: async tokenRespons => {
             console.log(tokenRespons)
-            const data = axios.get("https://www.googleapis.com/oauth2/v3/userinfo" , 
-                {headers : `Bearer ${tokenRespons.access_token}`},
+            const data = axios.get("https://www.googleapis.com/oauth2/v3/userinfo",
+                {
+                    headers: {
+                        Authorization: `Bearer ${tokenRespons.access_token}`
+                    },
+                },
             )
 
             setUser(data);
+            console.log(data);
+            navigate('/');
         },
-        onError : () => console.error("error in googleauth hook maybe"),
+        onError: () => console.error("error in googleauth hook maybe"),
     })
 
     return (
